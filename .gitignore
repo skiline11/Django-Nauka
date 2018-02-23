@@ -3,3 +3,4 @@ __pycache__
 mojeWirtualneSrodowisko
 db.sqlite3
 .DS_Store
+public
