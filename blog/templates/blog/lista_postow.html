@@ -1,36 +1,13 @@
-<html>
-    <head>
-        <title>Misia blog</title>
-    </head>
-    <body>
-        <div>
-            <h1><a href="">Misia BloG</a></h1>
-        </div>
+{% extends 'blog/base.html' %}
 
-
-{#        <div>#}
-{#            <p>published: 14.06.2014, 12:14</p>#}
-{#            <h2><a href="">My first post</a></h2>#}
-{#            <p>Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>#}
-{#        </div>#}
-{##}
-{#        <div>#}
-{#            <p>published: 14.06.2014, 12:14</p>#}
-{#            <h2><a href="">My second post</a></h2>#}
-{#            <p>Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut f.</p>#}
-{#        </div>#}
-
-{#        {{ posts }}#}
-
-        {% for single_post in posts %}
-            <hr>
-            <div>
-                <p>published: {{ single_post.published_date }}</p>
-                <h1><a href="">{{ single_post.title }}</a></h1>
-                <p>{{ single_post.text|linebreaksbr}}</p>
+{% block content %}
+    {% for post in posts %}
+        <div class="post">
+            <div class="date">
+                {{ post.published_date }}
             </div>
-        {% endfor %}
-
-
-    </body>
-</html>
+            <h1><a href="{% url 'szczegoly_postu' pk=post.pk %}">{{ post.title }}</a></h1>
+            <p>{{ post.text|linebreaksbr }}</p>
+        </div>
+    {% endfor %}
+{% endblock %}
