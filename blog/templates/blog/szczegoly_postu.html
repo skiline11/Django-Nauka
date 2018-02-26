@@ -2,15 +2,46 @@
 
 {% block content %}
     <div class="post">
+        <h1>{{ post.title }}</h1>
         {% if post.published_date %}
             <div class="date">
                 {{ post.published_date }}
             </div>
+        {% else %}
+            <a class="btn btn-default" href="{% url 'publikacja_postu' pk=post.pk %}">Publikuj</a>
         {% endif %}
         <a class="btn btn-default" href="{% url 'edycja_postu' pk=post.pk %}">
             <span class="glyphicon glyphicon-pencil"></span>
         </a>
-        <h1>{{ post.title }}</h1>
+        <a class="btn btn-default" href="{% url 'usuwanie_postu' pk=post.pk %}">
+            <span class="glyphicon glyphicon-remove"></span>
+        </a>
         <p>{{ post.text|linebreaksbr }}</p>
     </div>
+
+    <hr>
+    <a class="btn btn-default" href="{% url 'dodawanie_komentarza' pk=post.pk %}">Dodaj komentarz</a>
+    {% for comment in post.comments.all %}
+        {% if user.is_authenticated or comment.approved_comment %}
+            <div class="comment">
+                <div class="date">
+                    {{ comment.created_date }}
+                    {% if not comment.approved_comment %}
+                        <a class="btn btn-default" href="{% url 'usuwanie_komentarza' pk=comment.pk %}">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </a>
+                        <a class="btn btn-default" href="{% url 'zatwierdzanie_komentarza' pk=comment.pk %}">
+                            <span class="glyphicon glyphicon-ok"></span>
+                        </a>
+                    {% endif %}
+                </div>
+                <strong>{{ comment.author }}</strong>
+                <p>{{ comment.text|linebreaks }}</p>
+            </div>
+        {% endif %}
+    {# The for tag can take an optional {% empty %} clause whose text is displayed if the given array is empty or could not be found:#}
+    {% empty %}
+        <p>No comments here yet :(</p>
+    {% endfor %}
+
 {% endblock %}

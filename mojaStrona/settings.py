@@ -102,6 +102,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'public', 'static')  #Dodane
-STATICFILES_DIRS = ( #Dodane
-    os.path.join(BASE_DIR, "static"), # to dołącza adres folderu z plikami statycznymi
+STATICFILES_DIRS = (  #Dodane
+    os.path.join(BASE_DIR, "static"),  # to dołącza adres folderu z plikami statycznymi
 )
+
+LOGIN_REDIRECT_URL = '/'  #dzięki temu, kiedy strona logowania będzie dostępna bezpośrednio, to przekieruje udane logowanie do strony głównej naszego blogu
